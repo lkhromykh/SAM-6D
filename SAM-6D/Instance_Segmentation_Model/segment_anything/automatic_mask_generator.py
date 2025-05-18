@@ -36,8 +36,8 @@ class SamAutomaticMaskGenerator:
     def __init__(
         self,
         model: Sam,
-        points_per_side: Optional[int] = 32,
-        points_per_batch: int = 64,
+        points_per_side: Optional[int] = 16, # default 32
+        points_per_batch: int = 32,          # default 64
         pred_iou_thresh: float = 0.88,
         stability_score_thresh: float = 0.95,
         stability_score_offset: float = 1.0,

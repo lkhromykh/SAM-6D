@@ -1,3 +1,9 @@
+export CAD_PATH=$PWD/Data/Example/obj_000005.ply
+export RGB_PATH=$PWD/Data/Example/rgb.png
+export DEPTH_PATH=$PWD/Data/Example/depth.png
+export CAMERA_PATH=$PWD/Data/Example/camera.json
+export OUTPUT_DIR=$PWD/Data/Example/outputs
+
 # Render CAD templates
 cd Render
 blenderproc run render_custom_templates.py --output_dir $OUTPUT_DIR --cad_path $CAD_PATH #--colorize True 

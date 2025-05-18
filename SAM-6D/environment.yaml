@@ -7,14 +7,14 @@ channels:
   - defaults
 dependencies:
   - pip
-  - python=3.9.6
+  - python=3.10.*
   - pip:
-    - torch==2.0.0
-    - torchvision==0.15.1
+    - torch
+    - torchvision
     - fvcore
-    - xformers==0.0.18
-    - torchmetrics==0.10.3
-    - blenderproc==2.6.1
+    - xformers
+    - torchmetrics
+    - blenderproc
     - opencv-python 
     # ISM 
     - omegaconf
@@ -25,15 +25,15 @@ dependencies:
     - pandas
     - imageio
     - pyrender
-    - pytorch-lightning==1.8.1
+    - pytorch-lightning
     - pycocotools 
     - distinctipy
     - git+https://github.com/facebookresearch/segment-anything.git  # SAM
-    - ultralytics==8.0.135  # FastSAM
+    - ultralytics
     # PEM
     - timm
-    - gorilla-core==0.2.7.8
-    - trimesh==4.0.8
-    - gpustat==1.0.0
+    - gorilla-core
+    - trimesh
+    - gpustat
     - imgaug
     - einops
