@@ -9,9 +9,9 @@ import trimesh
 parser = argparse.ArgumentParser()
 parser.add_argument('--cad_path', help="The path of CAD model")
 parser.add_argument('--output_dir', help="The path to save CAD templates")
-parser.add_argument('--normalize', default=True, help="Whether to normalize CAD model or not")
-parser.add_argument('--colorize', default=False, help="Whether to colorize CAD model or not")
-parser.add_argument('--base_color', default=0.05, help="The base color used in CAD model")
+parser.add_argument('--normalize', default=True, type=bool, help="Whether to normalize CAD model or not")
+parser.add_argument('--colorize', default=False, type=bool, help="Whether to colorize CAD model or not")
+parser.add_argument('--base_color', default=0.05, type=float, help="The base color used in CAD model")
 args = parser.parse_args()
 
 # set the cnos camera path
