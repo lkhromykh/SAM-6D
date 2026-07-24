@@ -1,0 +1,29 @@
+[project]
+name = "sam6d-pem"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "sam6d-pointnet2",
+    "torch",
+    "torchvision",
+    "timm",
+    "gorilla-core",
+    "trimesh",
+    "imgaug",
+    "opencv-python",
+    "pycocotools",
+    "gpustat",
+    "xformers",
+    "einops",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.32,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "sam6d.pem"
+
+[tool.uv.sources]
+sam6d-pointnet2 = { workspace = true }

@@ -1,0 +1,25 @@
+[project]
+name = "sam6d"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch",
+    "torchvision"
+]
+
+[tool.uv.workspace]
+members = ["SAM-6D/pointnet2", "SAM-6D/Pose_Estimation_Model", "SAM-6D/Render"]
+
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch" }
+torchvision = { index = "pytorch" }
+
+[tool.uv.extra-build-dependencies]
+sam6d-pointnet2 = [{ requirement = "torch", match-runtime = true }]

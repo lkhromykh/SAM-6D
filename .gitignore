@@ -1,6 +1,10 @@
 __pycache__/
 *.egg-info/
 *.egg
-build
+build/
+*.so
 *.pt
 *.pth
+.venv/
+.python-version
+.vscode/

@@ -1,7 +1,6 @@
 import gorilla
 import argparse
 import os
-import sys
 from PIL import Image
 import os.path as osp
 import numpy as np
@@ -13,12 +12,15 @@ import torch
 import torchvision.transforms as transforms
 import cv2
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.join(BASE_DIR, '..', 'Pose_Estimation_Model')
-sys.path.append(os.path.join(ROOT_DIR, 'provider'))
-sys.path.append(os.path.join(ROOT_DIR, 'utils'))
-sys.path.append(os.path.join(ROOT_DIR, 'model'))
-sys.path.append(os.path.join(BASE_DIR, 'model', 'pointnet2'))
+from sam6d.pem.utils.data_utils import (
+    load_im,
+    get_bbox,
+    get_point_cloud_from_depth,
+    get_resize_rgb_choose,
+)
+from sam6d.pem.utils.draw_utils import draw_detections
+import pycocotools.mask as cocomask
+import trimesh
 
 
 def get_parser():
@@ -45,7 +47,7 @@ def get_parser():
                         type=int,
                         default=0,
                         help="")
-    
+
     # input
     parser.add_argument("--output_dir", required=True, help="Path to root directory of the output")
     parser.add_argument("--cad_path", required=True, help="Path to CAD(mm)")
@@ -84,17 +86,6 @@ def init():
     return  cfg
 
 
-
-from data_utils import (
-    load_im,
-    get_bbox,
-    get_point_cloud_from_depth,
-    get_resize_rgb_choose,
-)
-from draw_utils import draw_detections
-import pycocotools.mask as cocomask
-import trimesh
-
 rgb_transform = transforms.Compose([transforms.ToTensor(),
                                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                     std=[0.229, 0.224, 0.225])])
@@ -104,7 +95,7 @@ def visualize(rgb, pred_rot, pred_trans, model_points, K, save_path):
     img = Image.fromarray(np.uint8(img))
     img.save(save_path)
     prediction = Image.open(save_path)
-    
+
     # concat side by side in PIL
     rgb = Image.fromarray(np.uint8(rgb))
     img = np.array(img)
@@ -277,7 +268,7 @@ if __name__ == "__main__":
 
     print("=> loading input data ...")
     input_data, img, whole_pts, model_points, detections = get_test_data(
-        cfg.rgb_path, cfg.depth_path, cfg.cam_path, cfg.cad_path, cfg.seg_path, 
+        cfg.rgb_path, cfg.depth_path, cfg.cam_path, cfg.cad_path, cfg.seg_path,
         cfg.det_score_thresh, cfg.test_dataset
     )
     ninstance = input_data['pts'].size(0)
@@ -312,4 +303,3 @@ if __name__ == "__main__":
     K = input_data['K'].detach().cpu().numpy()[valid_masks]
     vis_img = visualize(img, pred_rot[valid_masks], pred_trans[valid_masks], model_points*1000, K, save_path)
     vis_img.save(save_path)
-

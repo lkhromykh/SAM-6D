@@ -1,0 +1,9 @@
+[project]
+name = "sam6d-pointnet2"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = ["torch"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

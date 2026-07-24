@@ -1,0 +1,17 @@
+[project]
+name = "sam6d-render"
+version = "0.0.1"
+require-python = ">=3.10"
+dependencies = [
+    "blenderproc",
+    "numpy",
+    "opencv-python",
+    "trimesh"
+]
+
+[build-system]
+requires = ["uv_build>=0.11.32,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "sam6d.render"
