@@ -5,5 +5,11 @@ requires-python = ">=3.10"
 dependencies = ["torch"]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "wheel", "torch"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["sam6d.pointnet2"]
+
+[tool.setuptools.package-dir]
+"sam6d.pointnet2" = "src/sam6d/pointnet2"

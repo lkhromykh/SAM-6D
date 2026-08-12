@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 import itertools
 from pathlib import Path
-from setuptools import setup, find_packages
+from setuptools import setup
 
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
@@ -13,9 +13,6 @@ _ext_include = _ext_src.joinpath("include").resolve()
 _ext_sources = map(str, itertools.chain(_ext_src.rglob("*.cu"), _ext_src.rglob("*.cpp")))
 
 setup(
-    name='sam6d.pointnet2',
-    package_dir={"": "src"},
-    packages = find_packages(where="src"),
     ext_modules=[
         CUDAExtension(
             name='sam6d.pointnet2._ext',
@@ -30,5 +27,5 @@ setup(
                 "-D__CUDA_NO_HALF2_OPERATORS__",
             ]},)
     ],
-    cmdclass={'build_ext': BuildExtension.with_options(use_ninja=True)}
+    cmdclass={'build_ext': BuildExtension}
 )
