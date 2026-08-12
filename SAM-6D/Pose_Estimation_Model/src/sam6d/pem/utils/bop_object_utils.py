@@ -10,9 +10,7 @@ import numpy as np
 import trimesh
 from tqdm import tqdm
 
-from data_utils import (
-    load_im,
-)
+from sam6d.pem.utils.data_utils import load_im
 
 class Obj:
     def __init__(
@@ -54,7 +52,7 @@ class Obj:
                 mask_path = os.path.join(path, 'mask_'+str(i)+'.png')
 
                 rgb = load_im(rgb_path).astype(np.uint8)
-                xyz = np.load(xyz_path).astype(np.float32) / 1000.0 
+                xyz = np.load(xyz_path).astype(np.float32) / 1000.0
                 mask = load_im(mask_path).astype(np.uint8) == 255
 
                 self.template.append(rgb)
@@ -114,4 +112,3 @@ def load_objs(
         )
         cnt+=1
     return objs, obj_ids
-
