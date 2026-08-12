@@ -4,10 +4,12 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "torch",
-    "torchvision"
-]
+dependencies = []
+
+[project.optional-dependencies]
+pointnet2 = ["sam6d-pointnet2"]
+pem = ["sam6d-pem"]
+render = ["sam6d-render"]
 
 [tool.uv.workspace]
 members = ["SAM-6D/pointnet2", "SAM-6D/Pose_Estimation_Model", "SAM-6D/Render"]
@@ -20,6 +22,9 @@ explicit = true
 [tool.uv.sources]
 torch = { index = "pytorch" }
 torchvision = { index = "pytorch" }
+sam6d-pointnet2 = { workspace = true }
+sam6d-pem = { workspace = true }
+sam6d-render = { workspace = true }
 
 [tool.uv.extra-build-dependencies]
 sam6d-pointnet2 = [{ requirement = "torch", match-runtime = true }]
