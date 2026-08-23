@@ -5,7 +5,7 @@ require-python = ">=3.10"
 dependencies = [
     "blenderproc",
     "numpy",
-    "opencv-python",
+    "pillow",
     "trimesh",
 ]
 

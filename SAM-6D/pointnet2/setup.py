@@ -15,7 +15,7 @@ _ext_sources = map(str, itertools.chain(_ext_src.rglob("*.cu"), _ext_src.rglob("
 setup(
     ext_modules=[
         CUDAExtension(
-            name='sam6d.pointnet2._ext',
+            name="sam6d.pointnet2._ext",
             sources=sorted(_ext_sources),
             include_dirs = [str(_ext_include)],
             extra_compile_args={
@@ -27,5 +27,5 @@ setup(
                 "-D__CUDA_NO_HALF2_OPERATORS__",
             ]},)
     ],
-    cmdclass={'build_ext': BuildExtension}
+    cmdclass={"build_ext": BuildExtension}
 )
