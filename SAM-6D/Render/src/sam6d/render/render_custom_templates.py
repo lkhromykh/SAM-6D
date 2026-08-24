@@ -1,20 +1,26 @@
 import blenderproc as bproc
 
 import argparse
-from pathlib import Path
 import sys
-from typing import Literal, TYPE_CHECKING
+from pathlib import Path
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 import trimesh
 
 if TYPE_CHECKING:
-    from sam6d.render.common import CamPoses, Templates, PathLike, get_norm_info, load_poses
+    from sam6d.render.common import (
+        CamPoses,
+        PathLike,
+        Templates,
+        get_norm_info,
+        load_poses,
+    )
 else:
     # todo: blender does not recognize the package
     _package = Path(__file__).parent
     sys.path.append(str(_package))
-    from common import CamPoses, Templates, PathLike, get_norm_info, load_poses
+    from common import CamPoses, PathLike, Templates, get_norm_info, load_poses
 
 
 def render_custom_templates(
@@ -60,7 +66,7 @@ def render_custom_templates(
     masks = nocs[..., -1] > 0.5
     nocs = nocs[..., :3]
     return Templates(
-        colors=colors,
+        rgbs=colors,
         nocs=nocs,
         masks=masks,
     )
@@ -69,7 +75,7 @@ def render_custom_templates(
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--cad_path', required=True, help='The path of CAD model')
-    parser.add_argument('--output_dir', required=True, help='The path to save CAD templates')
+    parser.add_argument('--output_path', required=True, help='The path to save CAD templates')
     parser.add_argument('--normalize', action=argparse.BooleanOptionalAction, default=True, help='Whether to normalize CAD model or not')
     parser.add_argument('--colorize', action=argparse.BooleanOptionalAction, default=False, help='Whether to colorize CAD model or not')
     parser.add_argument('--base_color', default=0.05, type=float, help='The base color used in CAD model')
@@ -89,9 +95,8 @@ def main():
     bproc.init()
     templates = render_custom_templates(str(cad_path), cam_poses, args.normalize, color)
     bproc.clean_up()
-    breakpoint()
 
-    save_fpath = Path(args.output_dir).resolve() / 'templates'
+    save_fpath = Path(args.output_path).resolve()
     templates.save(save_fpath)
 
 

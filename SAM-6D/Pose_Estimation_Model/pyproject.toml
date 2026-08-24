@@ -5,6 +5,7 @@ requires-python = ">=3.10"
 dependencies = [
     "numpy",
     "sam6d-pointnet2",
+    "sam6d-render",
     "torch",
     "torchvision",
     "timm",
@@ -24,3 +25,8 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-name = "sam6d.pem"
+
+
+[tool.uv.sources]
+sam6d-pointnet2 = { workspace = true }
+sam6d-render = { workspace = true }

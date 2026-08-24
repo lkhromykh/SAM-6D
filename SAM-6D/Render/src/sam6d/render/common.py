@@ -12,9 +12,7 @@ CamPoses: TypeAlias = np.ndarray[tuple[int, Literal[4], Literal[4]], np.dtype[np
 
 
 class Templates(NamedTuple):
-    # rgb
-    colors: np.ndarray[tuple[int, int, int, Literal[3]], np.dtype[np.uint8]]
-    # nocs [0, 1]
+    rgbs: np.ndarray[tuple[int, int, int, Literal[3]], np.dtype[np.uint8]]
     nocs: np.ndarray[tuple[int, int, int, Literal[3]], np.dtype[np.floating]]
     masks: np.ndarray[tuple[int, int, int], np.dtype[np.bool_]]
 
@@ -22,7 +20,7 @@ class Templates(NamedTuple):
         np.savez(
             path,
             allow_pickle=False,
-            colors=self.colors,
+            rgbs=self.rgbs,
             nocs=self.nocs,
             masks=self.masks
         )
@@ -31,7 +29,7 @@ class Templates(NamedTuple):
     def load(cls, path: PathLike) -> Self:
         with np.load(path, allow_pickle=False) as data:
             return cls(
-                colors=data["colors"],
+                rgbs=data["rgbs"],
                 nocs=data["nocs"],
                 masks=data["masks"],
             )
@@ -40,7 +38,7 @@ class Templates(NamedTuple):
 def visualize_templates(templates: Templates, output_path: PathLike) -> None:
     path = Path(output_path).resolve()
     path.mkdir()
-    rgbs = templates.colors
+    rgbs = templates.rgbs
     nocs = (255 * templates.nocs).astype(np.uint8)
     masks = (255 * templates.masks).astype(np.uint8)
 
@@ -65,6 +63,7 @@ def get_norm_info(mesh: trimesh.Trimesh, sample_points: int | None = None) -> fl
 
 
 def load_poses(name: str) -> CamPoses:
-    path = resources.files(__package__).joinpath(name)
+    # path = resources.files(__package__).joinpath(name)
+    path = Path(__file__).parent.joinpath(name)
     with path.open("rb") as file:
         return np.load(file, allow_pickle=False)
