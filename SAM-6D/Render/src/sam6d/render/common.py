@@ -55,7 +55,7 @@ def get_norm_info(mesh: trimesh.Trimesh, sample_points: int | None = None) -> fl
     if sample_points is None:
         min_value, max_value = mesh.bounds
     else:
-        model_points, _ = trimesh.sample.sample_surface(mesh, sample_points)[0]
+        model_points, _ = trimesh.sample.sample_surface(mesh, sample_points)
         min_value = np.min(model_points, axis=0)
         max_value = np.max(model_points, axis=0)
     radius = max(np.linalg.norm(max_value), np.linalg.norm(min_value))
