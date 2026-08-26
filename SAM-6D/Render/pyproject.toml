@@ -15,6 +15,3 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-name = "sam6d.render"
-
-[project.scripts]
-sam6d-render = "sam6d.render.entrypoint:main"

@@ -1,5 +1,5 @@
 import os
-from typing import Any, Literal, TypedDict
+from typing import Literal, TypedDict
 
 import cv2
 import gorilla
@@ -18,12 +18,7 @@ class EndPointsIn(TypedDict):
     dense_po: torch.Tensor
     dense_fo: torch.Tensor
     model: torch.Tensor
-
-
-class EndPointsOut(EndPointsIn):
-    pred_R:  torch.Tensor
-    pred_t: torch.Tensor
-    pred_pose_score: torch.Tensor
+    K: torch.Tensor
 
 
 class PoseEstimationModel(torch.nn.Module):
@@ -52,7 +47,6 @@ class PoseEstimationModel(torch.nn.Module):
         transforms = torch.eye(4, device=device).unsqueeze(0).repeat(rgb.shape[0], 1, 1)
         transforms[:, :3, :3] = output_data['pred_R']
         transforms[:, :3, 3] = output_data['pred_t']
-        transforms = torch.bmm(input_data['extrinsics'], transforms)
         return transforms
 
     def extract_features(self, templates: Templates) -> tuple[torch.Tensor, torch.Tensor]:
